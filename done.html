@@ -3,12 +3,14 @@
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
-
-  {{> hello}}
+  <div class="splash">
+    {{> question}}
+  </div>
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="question">
+  <div class="block">
+    <h1>It's {{currentTime}} on {{currentDay}}</h1>
+    <input type="text" placeholder="What'd you get done?">
+  </div>
 </template>
