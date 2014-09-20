@@ -7,22 +7,34 @@
     {{> question}}
   </div>
   <div class="history">
-    {{> history}}
+    {{> today}}
+    {{> yesterday}}
   </div>
 </body>
 
 <template name="question">
   <div class="block">
     <h1>It's {{currentTime}} on {{currentDay}}</h1>
-    <input type="text" placeholder="What'd you get done?">
+    <input type="text" id="new_task" placeholder="What'd you get done?">
   </div>
 </template>
 
-<template name="history">
-  {{#each post}}
-    <div class="block">
-      {{name}}
-      {{createdAt}}
-    </div>
+<template name="today">
+  Today:
+  {{#each task}}
+    {{> taskItem}}
   {{/each}}
+</template>
+
+<template name="yesterday">
+  Yesterday:
+  {{#each task}}
+    {{> taskItem}}
+  {{/each}}
+</template>
+
+<template name="taskItem">
+  <div class="block">
+    {{name}} {{createdAt}}
+  </div>
 </template>
