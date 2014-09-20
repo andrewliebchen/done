@@ -3,8 +3,11 @@
 </head>
 
 <body>
-  <div class="splash">
+  <div class="question">
     {{> question}}
+  </div>
+  <div class="history">
+    {{> history}}
   </div>
 </body>
 
@@ -13,4 +16,13 @@
     <h1>It's {{currentTime}} on {{currentDay}}</h1>
     <input type="text" placeholder="What'd you get done?">
   </div>
+</template>
+
+<template name="history">
+  {{#each post}}
+    <div class="block">
+      {{name}}
+      {{createdAt}}
+    </div>
+  {{/each}}
 </template>
