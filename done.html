@@ -1,6 +1,5 @@
 <head>
-  <title>done</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Done</title>
   <meta name="viewport" content="initial-scale = 1, user-scalable = no">
 </head>
 
@@ -9,20 +8,26 @@
     <div class="question-wrapper">
       {{> question}}
     </div>
-    <div class="history">
-      {{> today}}
-      {{> yesterday}}
-    </div>
+    {{#if currentUser}}
+      <div class="history">
+        {{> today}}
+        {{> yesterday}}
+      </div>
+    {{/if}}
   </div>
 </body>
 
 <template name="question">
   <div class="question block">
     <h2 data-fit-text>It's {{currentTime}} on {{currentDay}}</h2>
-    <div class="input-container{{#if taskAdded}} tada{{/if}}">
-      <input type="text" id="new_task_verb" placeholder="verbed...">
-      <input type="text" id="new_task_object" placeholder="...an object">
-    </div>
+    {{#if currentUser}}
+      <div class="input-container{{#if taskAdded}} tada{{/if}}">
+        <input type="text" id="new_task_verb" placeholder="verbed...">
+        <input type="text" id="new_task_object" placeholder="...an object">
+      </div>
+    {{else}}
+      {{> loginButtons}}
+    {{/if}}
   </div>
 </template>
 

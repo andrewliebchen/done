@@ -1,7 +1,10 @@
 Tasks = new Meteor.Collection('tasks');
 
 if (Meteor.isClient) {
+  Session.set('loggedIn', null);
   Session.set('taskAdded', null);
+
+  Meteor.subscribe('tasks');
 
   Meteor.startup(function(){
     // Background
@@ -60,6 +63,11 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
+  Meteor.publish('tasks', function(){
+    var yesterday = moment().subtract(1, 'days').format('YYYYMMDD');
+    return Tasks.find({createdAtDate: {$gte: yesterday}});
+  });
+
   Meteor.methods({
     'addTask' : function(newTask) {
       var now = moment();
