@@ -23,7 +23,7 @@ $input-height: 3em;
 %container {
   width: 50%;
   margin: 0 auto;
-  max-width: 700px;
+  max-width: 600px;
 }
 
 // Animation
@@ -123,7 +123,6 @@ small {
 }
 
 [data-fit-text] {
-  text-transform: uppercase;
 
   @include breakpoint-small {
     height: 2em;
@@ -134,10 +133,8 @@ input {
   @include appearance(none);
   @include transition(all 0.1s ease-in-out);
   background-color: $block-background;
-  border-radius: $input-height / 2;
-  border-radius: $input-height / 2;
   border: 0;
-  color: $color-dark;
+  color: $color-light;
   display: block;
   font-weight: bold;
   height: $input-height;
@@ -146,6 +143,7 @@ input {
   padding: 0.5em;
   text-align: center;
   width: 100%;
+  margin-bottom: 0.5em;
 
   @include placeholder {
     color: $color-light;
@@ -154,6 +152,7 @@ input {
   &:focus {
     background-color: white;
     outline: none;
+    color: $color-dark;
   }
 }
 
@@ -174,31 +173,47 @@ ol {
   }
 }
 
-.block-header,
-.block-list-item {
-  background-color: $block-background;
-  color: white;
-  margin-bottom: 1px;
-  padding: 0.5em 1em;
-}
+// .block-header,
+// .block-list-item {
+//   background-color: $block-background;
+//   color: white;
+//   margin-bottom: 1px;
+//   padding: 0.5em 1em;
+// }
 
-.block-header {
-  border-radius: 5px 5px 0 0;
-  font-weight: bold;
-  margin-bottom: 4px;
-}
+// .block-header {
+//   border-radius: 5px 5px 0 0;
+//   font-weight: bold;
+//   margin-bottom: 4px;
+// }
+
+// .block-list-item {
+//   &:last-child {
+//     border-radius: 0 0 5px 5px;
+//   }
+// }
 
 .block-list-item {
-  &:last-child {
-    border-radius: 0 0 5px 5px;
+  display: inline;
+
+  &::after {
+    content: ",";
+    margin-left: -2px
   }
-}
 
-.background {
-  @include position(fixed, 0px 0 0 0px);
-  @include size(100vw 100vh);
-  background-repeat: no-repeat;
-  background-size: cover;
+  &:first-child::after {
+    content: none;
+  }
+
+  &:last-child {
+    &::before {
+      content: " and ";
+    }
+
+    &::after {
+      content: ".";
+    }
+  }
 }
 
 // Templates

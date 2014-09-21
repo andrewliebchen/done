@@ -18,17 +18,20 @@
 
 <template name="question">
   <div class="question block">
-    <h1 data-fit-text>It's {{currentTime}} on {{currentDay}}</h1>
-    <div class="input-container">
-      <input type="text" id="new_task" class="{{#if taskAdded}}tada{{/if}}" placeholder="Whatchya been doing?">
+    <h2 data-fit-text>It's {{currentTime}} on {{currentDay}}</h2>
+    <div class="input-container{{#if taskAdded}} tada{{/if}}">
+      <input type="text" id="new_task_verb" placeholder="verbed...">
+      <input type="text" id="new_task_object" placeholder="...an object">
     </div>
   </div>
 </template>
 
 <template name="today">
   <div class="today block">
-    <header class="block-header">Today</header>
     <ul class="block-list">
+      <li class="block-list-item">
+        <strong>Today I </strong>
+      </li>
       {{#each task}}
         {{> taskItem}}
       {{/each}}
@@ -38,8 +41,10 @@
 
 <template name="yesterday">
   <div class="yesterday block">
-    <header class="block-header">Yesterday</header>
     <ul class="block-list">
+      <li class="block-list-item">
+        <strong>Yesterday I </strong>
+      </li>
       {{#each task}}
         {{> taskItem}}
       {{/each}}
@@ -49,7 +54,6 @@
 
 <template name="taskItem">
   <li class="block-list-item">
-    <!-- <time datetime="{{createdAtTime}}">{{formatTime createdAtTime}}</time> -->
-    {{name}}
+    {{taskVerb}} {{taskObject}}
   </li>
 </template>

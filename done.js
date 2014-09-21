@@ -7,7 +7,7 @@ if (Meteor.isClient) {
     // Background
     var t = new Trianglify({
       noiseIntensity: 0,
-      cellsize: 50,
+      cellsize: 80,
       strokeOpacity: 0
     });
     var pattern = t.generate(document.body.clientWidth, document.body.clientHeight);
@@ -31,7 +31,7 @@ if (Meteor.isClient) {
   };
 
   Template.question.currentDay = function(){
-    return moment().format('dddd');
+    return moment().format('MMM. Do');
   };
 
   Template.today.task = function(){
@@ -45,11 +45,14 @@ if (Meteor.isClient) {
   };
 
   Template.question.events({
-    'keydown #new_task' : function(event, template){
+    'keydown #new_task_object' : function(event, template){
       if(event.which === 13) {
-        var newTask = template.find('#new_task');
-        newTask.value != '' ? Meteor.call('addTask', newTask.value) : null;
-        newTask.value = '';
+        var newTask = {
+          verb: template.find('#new_task_verb').value,
+          taskObject: template.find('#new_task_object').value
+        };
+        newTask.taskObject != '' ? Meteor.call('addTask', newTask) : null;
+        $(event.target).closest('.input-container').find('input').val('');
         Session.set('taskAdded', this._id);
       }
     }
@@ -61,7 +64,8 @@ if (Meteor.isServer) {
     'addTask' : function(newTask) {
       var now = moment();
       Tasks.insert({
-        name:      newTask,
+        taskVerb:      newTask.verb,
+        taskObject:    newTask.taskObject,
         createdAtDate: now.format('YYYYMMDD'),
         createdAtTime: Date.now()
       });
@@ -71,22 +75,26 @@ if (Meteor.isServer) {
   // Seed
   if(Tasks.find().count() === 0) {
     Tasks.insert({
-      name:      'Installed a fresh instance of Meteor',
+      taskVerb:      'Installed',
+      taskObject:    'a fresh instance of Meteor',
       createdAtDate: moment().format('YYYYMMDD'),
       createdAtTime: Date.now()
     });
     Tasks.insert({
-      name:      'Created a new branch on the Done repo',
+      taskVerb:      'Created',
+      taskObject:    'a new branch on the Done repo',
       createdAtDate: moment().format('YYYYMMDD'),
       createdAtTime: Date.now()
     });
     Tasks.insert({
-      name:      'Installed the MomentJS package',
+      taskVerb:      'Installed',
+      taskObject:    'the MomentJS package',
       createdAtDate: moment().subtract(1, 'days').format('YYYYMMDD'),
       createdAtTime: Date.now()
     });
     Tasks.insert({
-      name:      'Created some a basic template',
+      taskVerb:      'Created',
+      taskObject:    'some a basic template',
       createdAtDate: moment().subtract(1, 'days').format('YYYYMMDD'),
       createdAtTime: Date.now()
     });
