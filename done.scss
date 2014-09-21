@@ -92,6 +92,10 @@ small {
 
 [data-fit-text] {
   text-transform: uppercase;
+
+  @include breakpoint-small {
+    height: 2em;
+  }
 }
 
 input {
