@@ -104,11 +104,13 @@ body {
   min-height: 100%;
   line-height: 1.5;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 h1 {
-  color: $block-background;
+  color: $color-dark;
   font-weight: 100;
   letter-spacing: 1px;
   margin: 0 0 0.5em;
@@ -160,11 +162,6 @@ ol {
   list-style: none;
 }
 
-// Layout
-// .wrapper {
-//   position: relative;
-// }
-
 // Components
 .block {
   @extend %container;
@@ -194,13 +191,6 @@ ol {
 .block-list-item {
   &:last-child {
     border-radius: 0 0 5px 5px;
-  }
-
-  time {
-    color: black;
-    font-size: $font-size-small;
-    font-weight: bold;
-    margin-right: 0.5em;
   }
 }
 

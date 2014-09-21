@@ -13,7 +13,6 @@
       {{> today}}
       {{> yesterday}}
     </div>
-    <div id="background" class="background"></div>
   </div>
 </body>
 
@@ -50,7 +49,7 @@
 
 <template name="taskItem">
   <li class="block-list-item">
-    <time datetime="{{createdAtTime}}">{{formatTime createdAtTime}}</time>
+    <!-- <time datetime="{{createdAtTime}}">{{formatTime createdAtTime}}</time> -->
     {{name}}
   </li>
 </template>

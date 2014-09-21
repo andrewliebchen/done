@@ -11,7 +11,7 @@ if (Meteor.isClient) {
       strokeOpacity: 0
     });
     var pattern = t.generate(document.body.clientWidth, document.body.clientHeight);
-    document.getElementById('background').setAttribute('style', 'background-image: ' + pattern.dataUrl);
+    document.body.setAttribute('style', 'background-image: ' + pattern.dataUrl);
 
     // Full width text
     var nodes = document.querySelectorAll('[data-fit-text]');
