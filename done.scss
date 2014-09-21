@@ -1,0 +1,117 @@
+// Variables
+$color-dark:  #333;
+$color-mid:   #777;
+$color-light: #f0f0f0;
+
+$font-size-base: 18px;
+$font-size-small: (12/18)em;
+
+$font-family-base: "avenir next", "helvetica neue", helvetica, arial, sans-serif;
+
+// Mixins
+@mixin prefixer($key, $value) {
+  -webkit-#{$key}: #{$value};
+     -moz-#{$key}: #{$value};
+       -o-#{$key}: #{$value};
+          #{$key}: #{$value};
+}
+
+@mixin placeholder {
+  $placeholders: ":-webkit-input" ":-moz" "-moz" "-ms-input";
+  @each $placeholder in $placeholders {
+    &:#{$placeholder}-placeholder {
+      @content;
+    }
+  }
+}
+
+// Base
+* {
+  @include prefixer(box-sizing, border-box);
+}
+
+html,
+body {
+  color: $color-dark;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  height: 100%;
+  line-height: 1.5;
+}
+
+h1 {
+  color: rgba(black, 0.5);
+  font-weight: 100;
+  letter-spacing: 1px;
+  margin: 0 0 0.5em;
+  text-transform: uppercase;
+}
+
+small {
+  color: $color-mid;
+  font-size: $font-size-small;
+}
+
+[data-fitter-happier-text] {
+  text-transform: uppercase;
+}
+
+input {
+  @include prefixer(appearance, none);
+  background-color: rgba(black, 0.5);
+  border-radius: 100px;
+  border: 0;
+  color: $color-dark;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 2em;
+  padding: 0.5em;
+  text-align: center;
+  width: 100%;
+
+  @include placeholder {
+    color: $color-light;
+  }
+
+  &:focus {
+    background-color: white;
+    outline: none;
+  }
+}
+
+// Layout
+
+// Components
+.block {
+  padding: 1em;
+  position: relative;
+  z-index: 1;
+}
+
+.background {
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  width: 100vw;
+}
+
+// Templates
+.question {
+  margin: 0 auto;
+  text-align: center;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 50%;
+}
+
+.input-container {
+
+}
+
+.today,
+.yesterday {
+  display: none;
+}

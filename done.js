@@ -1,6 +1,19 @@
 Tasks = new Meteor.Collection('tasks');
 
 if (Meteor.isClient) {
+  Meteor.startup(function(){
+    var t = new Trianglify({
+      noiseIntensity: 0,
+      cellsize: 50,
+      strokeOpacity: 0
+    });
+    var pattern = t.generate(document.body.clientWidth, document.body.clientHeight);
+    document.getElementById('background').setAttribute('style', 'background-image: ' + pattern.dataUrl);
+
+    var nodes = document.querySelectorAll('[data-fitter-happier-text]');
+    fitterHappierText(nodes);
+  });
+
   Template.question.currentTime = function(){
     return moment().format('h:mm a');
   };
