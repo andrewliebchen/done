@@ -19,8 +19,38 @@ $input-height: 3em;
   margin: 0 auto;
 }
 
-// Animations
+// Icons
+@include font-face("icons", "/fonts/done");
 
+[data-icon] {
+  &::before {
+    font-family: "icons" !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    position: relative;
+    font-size: 30px;
+    top: 10px;
+    padding-left: 2px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+[data-icon="history"]::before {
+  content: "\E000";
+}
+
+[data-icon="tasks"]::before {
+  content: "\E001";
+}
+
+[data-icon="thumbs-up"]::before {
+  content: "\E002";
+}
 
 // Base
 * {
@@ -127,12 +157,31 @@ ol {
 }
 
 .input-container {
-  @include transition(width 0.2s ease-in-out);
+  @include transition(all 0.1s ease-in-out);
   background-color: $block-background;
   border-radius: $input-height / 2;
   height: $input-height;
   margin: 0 auto;
   width: 100%;
+
+  [data-icon] {
+    display: none;
+    color: black;
+  }
+
+  &.task-added {
+    width: $input-height;
+    border: 1px solid black;
+    background-color: transparent;
+
+    input {
+      display: none;
+    }
+
+    [data-icon] {
+      display: block;
+    }
+  }
 }
 
 .background {
@@ -144,20 +193,41 @@ ol {
 
 .toggle {
   $size: 3em;
-  @include position(absolute, 100% 0 0 50%);
+  @include position(absolute, auto 0 1em 50%);
   @include size($size);
-  @include transition(all 0.2s ease-in-out);
-  background-color: rgba(black, 0.1);
+  border: 1px solid white;
   border-radius: $size / 2;
   color: white;
   cursor: pointer;
   display: block;
   margin-left: -($size / 2);
-  margin-top: -4em;
   z-index: 1;
+  text-align: center;
+
+  [data-icon="history"] {
+    display: block;
+  }
+
+  [data-icon="tasks"] {
+    display: none;
+  }
 
   &:hover {
-    background-color: $block-background;
+    background-color: white;
+    color: black;
+  }
+
+  .show-history & {
+    top: 1em;
+    bottom: auto;
+
+    [data-icon="history"] {
+      display: none;
+    }
+
+    [data-icon="tasks"] {
+      display: block;
+    }
   }
 }
 
@@ -167,38 +237,17 @@ ol {
   @include transform(translateY(-50%));
   text-align: center;
   top: 40%;
+
+  .show-history & {
+    display: none;
+  }
 }
 
-.history-wrapper {
+.history {
   display: none;
   padding-top: 6em;
 
-  &.show-history {
+  .show-history & {
     display: block;
   }
 }
-
-// State
-.task-added {
-  width: $input-height;
-
-  input {
-    display: none;
-  }
-}
-
-.show-history {
-  .question {
-    display: none;
-  }
-
-  .history-wrapper {
-    display: block;
-  }
-
-  .toggle {
-    margin-top: 0;
-    top: 1em;
-  }
-}
-

@@ -5,7 +5,7 @@
 <body>
   <div class="wrapper">
     {{> question}}
-    <div class="history-wrapper">
+    <div class="history">
       {{> today}}
       {{> yesterday}}
     </div>
@@ -18,7 +18,8 @@
   <div class="question block">
     <h1 data-fit-text>It's {{currentTime}} on {{currentDay}}</h1>
     <div class="input-container{{#if taskAdded}} task-added{{/if}}">
-      <input type="text" id="new_task" placeholder="What've you been doing?">
+      <input type="text" id="new_task" placeholder="Whatchya been doing?">
+      <span data-icon="thumbs-up"></span>
     </div>
   </div>
 </template>
@@ -53,5 +54,8 @@
 </template>
 
 <template name="toggle">
-  <a id="toggle" class="toggle"></a>
+  <a id="toggle" class="toggle">
+    <span data-icon="history"></span>
+    <span data-icon="tasks"></span>
+  </a>
 </template>
