@@ -1,7 +1,10 @@
 Tasks = new Meteor.Collection('tasks');
 
 if (Meteor.isClient) {
+  Session.set('taskAdded', null);
+
   Meteor.startup(function(){
+    // Background
     var t = new Trianglify({
       noiseIntensity: 0,
       cellsize: 50,
@@ -10,9 +13,18 @@ if (Meteor.isClient) {
     var pattern = t.generate(document.body.clientWidth, document.body.clientHeight);
     document.getElementById('background').setAttribute('style', 'background-image: ' + pattern.dataUrl);
 
-    var nodes = document.querySelectorAll('[data-fitter-happier-text]');
+    // Full width text
+    var nodes = document.querySelectorAll('[data-fit-text]');
     fitterHappierText(nodes);
   });
+
+  Handlebars.registerHelper("formatTime", function(time) {
+    return moment(time).format('h:mm a');
+  });
+
+  Template.question.taskAdded = function(){
+    return Session.equals('taskAdded', this._id);
+  };
 
   Template.question.currentTime = function(){
     return moment().format('h:mm a');
@@ -38,6 +50,7 @@ if (Meteor.isClient) {
         var newTask = template.find('#new_task');
         newTask.value != '' ? Meteor.call('addTask', newTask.value) : null;
         newTask.value = '';
+        Session.set('taskAdded', this._id);
       }
     }
   });
@@ -50,7 +63,7 @@ if (Meteor.isServer) {
       Tasks.insert({
         name:      newTask,
         createdAtDate: now.format('YYYYMMDD'),
-        createdAtTime: now.format('HH:mm:ss')
+        createdAtTime: Date.now()
       });
     }
   });
@@ -60,22 +73,22 @@ if (Meteor.isServer) {
     Tasks.insert({
       name:      'Installed a fresh instance of Meteor',
       createdAtDate: moment().format('YYYYMMDD'),
-      createdAtTime: moment().format('HH:mm:ss')
+      createdAtTime: Date.now()
     });
     Tasks.insert({
       name:      'Created a new branch on the Done repo',
       createdAtDate: moment().format('YYYYMMDD'),
-      createdAtTime: moment().format('HH:mm:ss')
+      createdAtTime: Date.now()
     });
     Tasks.insert({
       name:      'Installed the MomentJS package',
       createdAtDate: moment().subtract(1, 'days').format('YYYYMMDD'),
-      createdAtTime: moment().format('HH:mm:ss')
+      createdAtTime: Date.now()
     });
     Tasks.insert({
       name:      'Created some a basic template',
       createdAtDate: moment().subtract(1, 'days').format('YYYYMMDD'),
-      createdAtTime: moment().format('HH:mm:ss')
+      createdAtTime: Date.now()
     });
   }
 }

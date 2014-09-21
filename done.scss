@@ -2,11 +2,14 @@
 $color-dark:  #333;
 $color-mid:   #777;
 $color-light: #f0f0f0;
+$block-background: rgba(black, 0.5);
 
 $font-size-base: 18px;
-$font-size-small: (12/18)em;
+$font-size-small: 0.75em;
 
 $font-family-base: "avenir next", "helvetica neue", helvetica, arial, sans-serif;
+
+$input-height: 3em;
 
 // Mixins
 @mixin prefixer($key, $value) {
@@ -25,9 +28,16 @@ $font-family-base: "avenir next", "helvetica neue", helvetica, arial, sans-serif
   }
 }
 
+%container {
+  width: 50%;
+  margin: 0 auto;
+}
+
 // Base
 * {
   @include prefixer(box-sizing, border-box);
+  margin: 0;
+  padding: 0;
 }
 
 html,
@@ -37,10 +47,12 @@ body {
   font-size: $font-size-base;
   height: 100%;
   line-height: 1.5;
+  background-color: $color-dark;
+  overflow: hidden;
 }
 
 h1 {
-  color: rgba(black, 0.5);
+  color: $block-background;
   font-weight: 100;
   letter-spacing: 1px;
   margin: 0 0 0.5em;
@@ -52,22 +64,22 @@ small {
   font-size: $font-size-small;
 }
 
-[data-fitter-happier-text] {
+[data-fit-text] {
   text-transform: uppercase;
 }
 
 input {
   @include prefixer(appearance, none);
-  background-color: rgba(black, 0.5);
-  border-radius: 100px;
+  background-color: transparent;
   border: 0;
   color: $color-dark;
-  display: inline-block;
+  display: block;
   font-weight: bold;
   line-height: 2em;
   padding: 0.5em;
   text-align: center;
   width: 100%;
+  border-radius: $input-height / 2;
 
   @include placeholder {
     color: $color-light;
@@ -79,39 +91,104 @@ input {
   }
 }
 
+ul,
+ol {
+  list-style: none;
+}
+
 // Layout
+.wrapper {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
 
 // Components
 .block {
+  @extend %container;
   padding: 1em;
   position: relative;
   z-index: 1;
+}
+
+.block-header,
+.block-list-item {
+  background-color: $block-background;
+  margin-bottom: 1px;
+  color: white;
+  padding: 0.5em 1em;
+}
+
+.block-header {
+  border-radius: 5px 5px 0 0;
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+
+.block-list-item {
+  &:last-child {
+    border-radius: 0 0 5px 5px;
+  }
+
+  time {
+    color: black;
+    font-size: $font-size-small;
+    font-weight: bold;
+    margin-right: 0.5em;
+  }
+}
+
+.input-container {
+  @include prefixer(transition, width 0.2s ease-in-out);
+  background-color: $block-background;
+  border-radius: $input-height / 2;
+  width: 100%;
+  height: $input-height;
+  margin: 0 auto;
 }
 
 .background {
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
-  left: 0px;
+  left: 0;
   position: absolute;
-  top: 0px;
+  top: 0;
   width: 100vw;
 }
 
 // Templates
 .question {
-  margin: 0 auto;
+  @extend %container;
   text-align: center;
   top: 40%;
   transform: translateY(-50%);
-  width: 50%;
 }
 
-.input-container {
-
-}
-
-.today,
-.yesterday {
+.history {
   display: none;
+
+  &.show-history {
+    display: block;
+  }
 }
+
+// State
+.task-added {
+  width: $input-height;
+
+  input {
+    display: none;
+  }
+}
+
+.show-history {
+  .question {
+    display: none;
+  }
+
+  .history {
+    display: block;
+  }
+}
+

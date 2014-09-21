@@ -3,18 +3,20 @@
 </head>
 
 <body>
-  {{> question}}
-  <div class="history">
-    {{> today}}
-    {{> yesterday}}
+  <div class="wrapper show-history">
+    {{> question}}
+    <div class="history">
+      {{> today}}
+      {{> yesterday}}
+    </div>
+    <div id="background" class="background"></div>
   </div>
-  <div id="background" class="background"></div>
 </body>
 
 <template name="question">
   <div class="question block">
-    <h1 data-fitter-happier-text>It's {{currentTime}} on {{currentDay}}</h1>
-    <div class="input-container">
+    <h1 data-fit-text>It's {{currentTime}} on {{currentDay}}</h1>
+    <div class="input-container{{#if taskAdded}} task-added{{/if}}">
       <input type="text" id="new_task" placeholder="What've you been doing?">
     </div>
   </div>
@@ -22,8 +24,8 @@
 
 <template name="today">
   <div class="today block">
-    Today:
-    <ul>
+    <header class="block-header">Today</header>
+    <ul class="block-list">
       {{#each task}}
         {{> taskItem}}
       {{/each}}
@@ -33,8 +35,8 @@
 
 <template name="yesterday">
   <div class="yesterday block">
-    Yesterday:
-    <ul>
+    <header class="block-header">Yesterday</header>
+    <ul class="block-list">
       {{#each task}}
         {{> taskItem}}
       {{/each}}
@@ -43,5 +45,8 @@
 </template>
 
 <template name="taskItem">
-    <li>{{name}} <small>{{createdAt}}</small></li>
+    <li class="block-list-item">
+      <time datetime="{{createdAtTime}}">{{formatTime createdAtTime}}</time>
+      {{name}}
+    </li>
 </template>
