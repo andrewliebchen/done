@@ -23,7 +23,36 @@ $input-height: 3em;
 %container {
   width: 50%;
   margin: 0 auto;
-  max-width: 600px;
+  max-width: 700px;
+}
+
+// Animation
+@include keyframes(tada) {
+  0% {
+    @include transform(scale3d(1, 1, 1));
+  }
+
+  10%, 20% {
+    @include transform(scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg));
+  }
+
+  30%, 50%, 70%, 90% {
+    @include transform(scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg));
+  }
+
+  40%, 60%, 80% {
+    @include transform(scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg));
+  }
+
+  100% {
+    @include transform(scale3d(1, 1, 1));
+  }
+}
+
+.tada {
+  @include animation-name(tada);
+  @include animation-duration(1s);
+  @include animation-fill-mode(both);
 }
 
 // Icons
@@ -72,9 +101,10 @@ body {
   color: $color-dark;
   font-family: $font-family-base;
   font-size: $font-size-base;
-  height: 100%;
+  min-height: 100%;
   line-height: 1.5;
   overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 h1 {
@@ -100,13 +130,17 @@ small {
 
 input {
   @include appearance(none);
-  background-color: transparent;
+  @include transition(all 0.1s ease-in-out);
+  background-color: $block-background;
+  border-radius: $input-height / 2;
   border-radius: $input-height / 2;
   border: 0;
   color: $color-dark;
   display: block;
   font-weight: bold;
+  height: $input-height;
   line-height: 2em;
+  margin: 0 auto;
   padding: 0.5em;
   text-align: center;
   width: 100%;
@@ -127,10 +161,9 @@ ol {
 }
 
 // Layout
-.wrapper {
-  @include size(100vw 100vh);
-  position: relative;
-}
+// .wrapper {
+//   position: relative;
+// }
 
 // Components
 .block {
@@ -171,34 +204,6 @@ ol {
   }
 }
 
-.input-container {
-  @include transition(all 0.1s ease-in-out);
-  background-color: $block-background;
-  border-radius: $input-height / 2;
-  height: $input-height;
-  margin: 0 auto;
-  width: 100%;
-
-  [data-icon] {
-    display: none;
-    color: black;
-  }
-
-  &.task-added {
-    width: $input-height;
-    border: 1px solid black;
-    background-color: transparent;
-
-    input {
-      display: none;
-    }
-
-    [data-icon] {
-      display: block;
-    }
-  }
-}
-
 .background {
   @include position(fixed, 0px 0 0 0px);
   @include size(100vw 100vh);
@@ -206,63 +211,18 @@ ol {
   background-size: cover;
 }
 
-.toggle {
-  $size: 3em;
-  @include position(absolute, auto 0 1em 50%);
-  @include size($size);
-  border-radius: $size / 2;
-  border: 1px solid white;
-  color: white;
-  cursor: pointer;
-  display: block;
-  margin-left: -($size / 2);
-  text-align: center;
-  z-index: 1;
-
-  [data-icon="history"] {
-    display: block;
-  }
-
-  [data-icon="tasks"] {
-    display: none;
-  }
-
-  &:hover {
-    background-color: white;
-    color: black;
-  }
-
-  .show-history & {
-    bottom: auto;
-    top: 1em;
-
-    [data-icon="history"] {
-      display: none;
-    }
-
-    [data-icon="tasks"] {
-      display: block;
-    }
-  }
+// Templates
+.question-wrapper {
+  height: 100vh;
 }
 
-// Templates
 .question {
   @extend %container;
   @include transform(translateY(-50%));
   text-align: center;
-  top: 40%;
-
-  .show-history & {
-    display: none;
-  }
+  top: 45%;
 }
 
 .history {
-  display: none;
-  padding-top: 6em;
-
-  .show-history & {
-    display: block;
-  }
+  min-height: 100vh;
 }

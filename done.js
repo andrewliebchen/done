@@ -54,12 +54,6 @@ if (Meteor.isClient) {
       }
     }
   });
-
-  Template.toggle.events({
-    'click #toggle' : function(event){
-      $('.wrapper').toggleClass('show-history');
-    }
-  });
 }
 
 if (Meteor.isServer) {
