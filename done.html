@@ -3,12 +3,13 @@
 </head>
 
 <body>
-  <div class="wrapper show-history">
+  <div class="wrapper">
     {{> question}}
-    <div class="history">
+    <div class="history-wrapper">
       {{> today}}
       {{> yesterday}}
     </div>
+    {{> toggle}}
     <div id="background" class="background"></div>
   </div>
 </body>
@@ -45,8 +46,12 @@
 </template>
 
 <template name="taskItem">
-    <li class="block-list-item">
-      <time datetime="{{createdAtTime}}">{{formatTime createdAtTime}}</time>
-      {{name}}
-    </li>
+  <li class="block-list-item">
+    <time datetime="{{createdAtTime}}">{{formatTime createdAtTime}}</time>
+    {{name}}
+  </li>
+</template>
+
+<template name="toggle">
+  <a id="toggle" class="toggle"></a>
 </template>

@@ -45,13 +45,19 @@ if (Meteor.isClient) {
   };
 
   Template.question.events({
-    'keydown #new_task' : function(event, template) {
+    'keydown #new_task' : function(event, template){
       if(event.which === 13) {
         var newTask = template.find('#new_task');
         newTask.value != '' ? Meteor.call('addTask', newTask.value) : null;
         newTask.value = '';
         Session.set('taskAdded', this._id);
       }
+    }
+  });
+
+  Template.toggle.events({
+    'click #toggle' : function(event){
+      $('.wrapper').toggleClass('show-history');
     }
   });
 }
