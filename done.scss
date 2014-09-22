@@ -11,8 +11,6 @@ $font-size-small: 0.75em;
 
 $font-family-base: "avenir next", "helvetica neue", helvetica, arial, sans-serif;
 
-$input-height: 3em;
-
 // Mixins and extends
 @mixin breakpoint-small {
   @media (max-width : 480px) {
@@ -60,19 +58,19 @@ $input-height: 3em;
 
 [data-icon] {
   &::before {
-    font-family: "icons" !important;
-    font-style: normal !important;
-    font-weight: normal !important;
-    font-variant: normal !important;
-    text-transform: none !important;
-    speak: none;
-    line-height: 1;
-    position: relative;
-    font-size: 30px;
-    top: 10px;
-    padding-left: 2px;
-    -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: "icons" !important;
+    font-size: 30px;
+    font-style: normal !important;
+    font-variant: normal !important;
+    font-weight: normal !important;
+    line-height: 1;
+    padding-left: 2px;
+    position: relative;
+    speak: none;
+    text-transform: none !important;
+    top: 10px;
   }
 }
 
@@ -97,16 +95,16 @@ $input-height: 3em;
 
 html,
 body {
+  background-attachment: fixed;
   background-color: $color-dark;
+  background-size: cover;
   color: $color-dark;
   font-family: $font-family-base;
   font-size: $font-size-base;
-  min-height: 100%;
   line-height: 1.5;
+  min-height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  background-attachment: fixed;
-  background-size: cover;
 }
 
 h1 {
@@ -136,22 +134,19 @@ input {
   color: $color-dark;
   display: block;
   font-weight: bold;
-  height: $input-height;
-  line-height: 2em;
   margin: 0 auto;
   padding: 0.5em 0;
   text-align: center;
   width: 100%;
-  margin-bottom: 0.5em;
 
   @include placeholder {
     color: rgba(black, 0.3);
   }
 
   &:focus {
-    outline: none;
-    color: $color-dark;
     box-shadow: 0 0 0 2px $color-dark;
+    color: $color-dark;
+    outline: none;
   }
 }
 
@@ -178,11 +173,19 @@ ol {
   @include box-orient(horizontal);
   @include box-pack(start);
 
+  @include breakpoint-small {
+    display: block;
+  }
+
   input {
     @include box-flex(1);
 
     + input {
       margin-left: 0.5em;
+
+      @include breakpoint-small {
+        margin: 0.5em 0 0 0;
+      }
     }
   }
 }
@@ -195,10 +198,6 @@ ol {
     margin-left: -2px
   }
 
-  &:first-child::after {
-    content: none;
-  }
-
   &:last-child {
     &::before {
       content: " and ";
@@ -207,6 +206,11 @@ ol {
     &::after {
       content: ".";
     }
+  }
+
+  &:first-child::after,
+  &:only-child::before {
+    content: none;
   }
 }
 

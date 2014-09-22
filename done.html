@@ -19,7 +19,7 @@
 
 <template name="question">
   <div class="question block">
-    <h1 data-fit-text>It's {{currentTime}} on {{currentDay}}. Today I...</h1>
+    <h1 data-fit-text>It's {{currentTime}} on {{currentDay}}. Just now I...</h1>
     {{#if currentUser}}
       <div class="input-container{{#if taskAdded}} tada{{/if}}">
         <input type="text" id="new_task_verb" placeholder="verbed...">
@@ -33,27 +33,35 @@
 
 <template name="today">
   <div class="today block">
-    <ul class="block-list">
-      <li class="block-list-item">
-        <strong>Today I </strong>
-      </li>
-      {{#each task}}
-        {{> taskItem}}
-      {{/each}}
-    </ul>
+    {{#if task.count}}
+      <ul class="block-list">
+        <li class="block-list-item">
+          <strong>Today</strong> I
+        </li>
+        {{#each task}}
+          {{> taskItem}}
+        {{/each}}
+      </ul>
+    {{else}}
+      <strong>Today</strong> I didn't do anything.
+    {{/if}}
   </div>
 </template>
 
 <template name="yesterday">
   <div class="yesterday block">
-    <ul class="block-list">
-      <li class="block-list-item">
-        <strong>Yesterday I </strong>
-      </li>
-      {{#each task}}
-        {{> taskItem}}
-      {{/each}}
-    </ul>
+    {{#if task.count}}
+      <ul class="block-list">
+        <li class="block-list-item">
+          <strong>Yesterday</strong> I
+        </li>
+        {{#each task}}
+          {{> taskItem}}
+        {{/each}}
+      </ul>
+    {{else}}
+      <strong>Yesterday</strong> I didn't do anything.
+    {{/if}}
   </div>
 </template>
 
