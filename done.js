@@ -1,7 +1,6 @@
 Tasks = new Meteor.Collection('tasks');
 
 if (Meteor.isClient) {
-  Session.set('loggedIn', null);
   Session.set('taskAdded', null);
 
   Meteor.subscribe('tasks');
@@ -65,7 +64,7 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.publish('tasks', function(){
     var yesterday = moment().subtract(1, 'days').format('YYYYMMDD');
-    return Tasks.find({createdAtDate: {$gte: yesterday}});
+    return Tasks.find({createdAtDate: {$gte: yesterday}, createdBy: this.userId});
   });
 
   Meteor.methods({
@@ -75,7 +74,8 @@ if (Meteor.isServer) {
         taskVerb:      newTask.verb,
         taskObject:    newTask.taskObject,
         createdAtDate: now.format('YYYYMMDD'),
-        createdAtTime: Date.now()
+        createdAtTime: Date.now(),
+        createdBy:     Meteor.userId()
       });
     }
   });
@@ -86,25 +86,29 @@ if (Meteor.isServer) {
       taskVerb:      'Installed',
       taskObject:    'a fresh instance of Meteor',
       createdAtDate: moment().format('YYYYMMDD'),
-      createdAtTime: Date.now()
+      createdAtTime: Date.now(),
+      createdBy:     this.userId
     });
     Tasks.insert({
       taskVerb:      'Created',
       taskObject:    'a new branch on the Done repo',
       createdAtDate: moment().format('YYYYMMDD'),
-      createdAtTime: Date.now()
+      createdAtTime: Date.now(),
+      createdBy:     this.userId
     });
     Tasks.insert({
       taskVerb:      'Installed',
       taskObject:    'the MomentJS package',
       createdAtDate: moment().subtract(1, 'days').format('YYYYMMDD'),
-      createdAtTime: Date.now()
+      createdAtTime: Date.now(),
+      createdBy:     this.userId
     });
     Tasks.insert({
       taskVerb:      'Created',
       taskObject:    'some a basic template',
       createdAtDate: moment().subtract(1, 'days').format('YYYYMMDD'),
-      createdAtTime: Date.now()
+      createdAtTime: Date.now(),
+      createdBy:     this.userId
     });
   }
 }

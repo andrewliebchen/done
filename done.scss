@@ -132,8 +132,7 @@ input {
   @include appearance(none);
   @include transition(all 0.1s ease-in-out);
   background-color: transparent;
-  border: 0;
-  border-bottom: 1px solid $color-dark;
+  border: 1px solid $color-dark;
   color: $color-dark;
   display: block;
   font-weight: bold;
@@ -152,7 +151,7 @@ input {
   &:focus {
     outline: none;
     color: $color-dark;
-    box-shadow: 0 4px 0 $color-dark;
+    box-shadow: 0 0 0 2px $color-dark;
   }
 }
 
