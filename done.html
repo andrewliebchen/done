@@ -19,7 +19,7 @@
 
 <template name="question">
   <div class="question block">
-    <h2 data-fit-text>It's {{currentTime}} on {{currentDay}}</h2>
+    <h1 data-fit-text>It's {{currentTime}} on {{currentDay}}. Today I...</h1>
     {{#if currentUser}}
       <div class="input-container{{#if taskAdded}} tada{{/if}}">
         <input type="text" id="new_task_verb" placeholder="verbed...">
